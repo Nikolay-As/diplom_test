@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Nikolay-As/diplom_test#readme",
   "dependencies": {
     "fs": "^0.0.1-security",
-    "onoff": "^6.0.3"
+    "onoff": "^6.0.3",
+    "pi-gpio": "^0.0.8"
   }
 }
