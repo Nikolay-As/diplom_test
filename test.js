@@ -1,8 +1,8 @@
 const led_pin = 575; // gpio 4
 const button_pin = 588; // gpio 17
 const gpio = require("onoff").gpio; // Подключаем библиотеку для работы с gpio
-const led = new gpio(led_pin, "out");
-const button = new gpio(button_pin, "in", "rising", { debounceTimeout: 10 });
+const led = new Gpio(led_pin, "out");
+const button = new Gpio(button_pin, "in", "rising", { debounceTimeout: 10 });
 
 button.watch((err, value) => {
   if (err) {
