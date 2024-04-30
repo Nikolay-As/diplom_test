@@ -11,11 +11,12 @@ const gpio = require("onoff").Gpio; // Подключаем библиотеку
 const led = new gpio(led_pin, "out");
 
 socket.on("connect", () => {
-  console.log(socket.id);
+  socket.emit("authorization",{id : 1})
+  console.log("передал успешно id");
 });
 
 socket.on("hello_world", () => {
-  console.log("успех");
+  console.log(led.readSync());
   led.writeSync(led.readSync() ^ 1);
 });
 
