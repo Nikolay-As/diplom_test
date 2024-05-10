@@ -25,6 +25,7 @@ let door_info_pin = new Array(); // тут хранится информация
 
 
 door_info_pin = git_info_at_start();
+console.log(door_info_pin);
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   console.log(door_info_pin[0]);
