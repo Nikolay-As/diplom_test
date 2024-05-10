@@ -38,7 +38,7 @@ function git_info_at_start() {
       if (err) {
         console.error(err.message);
       }else{
-      console.log(row);
+      console.log(row.length);
       }
     });
   });
