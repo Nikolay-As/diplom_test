@@ -45,6 +45,7 @@ function git_info_at_start() {
           led_lighting_pin: row.led_lighting_pin
         };
         door_info_pin.push(structure);
+        console.log(structure)
       }
     });
   });
