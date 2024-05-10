@@ -85,17 +85,17 @@ function runQueries(queries_text, parametr = null) {
     if (err) {
       console.error(err.message);
       return result;
+    } else {
+      db.all(queries_text, parametr, (err, rows) => {
+        if (err) {
+          console.error(err.message);
+          return result;
+        }
+        console.log(result);
+        result = rows;
+        return result;
+      });
     }
-  });
-
-  db.all(queries_text, parametr, (err, rows) => {
-    if (err) {
-      console.error(err.message);
-      return result;
-    }
-    console.log(result)
-    result = rows;
-    return result;
   });
 }
 
