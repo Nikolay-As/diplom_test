@@ -36,17 +36,17 @@ function git_info_at_start() {
         console.error(err.message);
       } else {
         console.log(row)
-        let  structure = {
-          id: row.id,
-          servo_pin: row.servo_pin,
-          led_bike_pin: row.led_bike_pin,
-          button_bike_pin: row.button_bike_pin,
-          buzzer_pin: row.buzzer_pin,
-          led_buzzer_pin: row.led_buzzer_pin,
-          led_lighting_pin: row.led_lighting_pin
-        };
-        door_info_pin.push(structure);
-        console.log(structure)
+        // let  structure = {
+        //   id: row.id,
+        //   servo_pin: row.servo_pin,
+        //   led_bike_pin: row.led_bike_pin,
+        //   button_bike_pin: row.button_bike_pin,
+        //   buzzer_pin: row.buzzer_pin,
+        //   led_buzzer_pin: row.led_buzzer_pin,
+        //   led_lighting_pin: row.led_lighting_pin
+        // };
+        // door_info_pin.push(structure);
+        // console.log(structure)
       }
     });
 
