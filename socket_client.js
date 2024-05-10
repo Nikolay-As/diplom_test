@@ -11,6 +11,8 @@ const gpio = require("onoff").Gpio; // Подключаем библиотеку
 const led = new gpio(led_pin, "out");
 const sqlite3 = require("sqlite3");
 const dbFilePath = "./box.db";
+var sqlite = require("better-sqlite3");
+var db = new sqlite(dbFilePath);
 let door_info_pin = new Array(); // тут хранится информация по пинам
 
 // socket.on("connect", () => {
@@ -62,42 +64,44 @@ function open_door(number_door) {}
 function close_door(number_door) {}
 
 // Функции связанные с SQL
-async function runQueries(queries_text, parametr = null) {
-  let result = new Array();
-  let db = await new sqlite3.Database(
-    dbFilePath,
-    sqlite3.OPEN_READWRITE,
-    (err) => {
-      if (err) {
-        console.log("Getting error " + err);
-        return result;
-      } else {
-        if (parametr) {
-          db.all(queries_text, parametr, (err, rows) => {
-            if (err) {
-              console.log("Getting error " + err);
-              return result;
-            } else {
-              console.log("nen1");
-              result = rows;
-              return result;
-            }
-          });
-        } else {
-          db.all(queries_text, (err, rows) => {
-            if (err) {
-              console.log("Getting error " + err);
-              return result;
-            } else {
-              result = rows;
-              return result;
-            }
-          });
-        }
-      }
-    }
-  );
-  // db.close();
-  // console.log("nen");
-  // return result;
+ function runQueries(queries_text, parametr = null) {
+
+  var rows = db.prepare(queries_text).all();
+  console.log(rows);
+
+  // let result = new Array();
+  // let db =  new sqlite3.Database(
+  //   dbFilePath,
+  //   sqlite3.OPEN_READWRITE,
+  //   (err) => {
+  //     if (err) {
+  //       console.log("Getting error " + err);
+  //       return result;
+  //     } else {
+  //       if (parametr) {
+  //         db.all(queries_text, parametr, (err, rows) => {
+  //           if (err) {
+  //             console.log("Getting error " + err);
+  //             return result;
+  //           } else {
+  //             console.log("nen1");
+  //             result = rows;
+  //             return result;
+  //           }
+  //         });
+  //       } else {
+  //         db.all(queries_text, (err, rows) => {
+  //           if (err) {
+  //             console.log("Getting error " + err);
+  //             return result;
+  //           } else {
+  //             result = rows;
+  //             return result;
+  //           }
+  //         });
+  //       }
+  //     }
+  //   }
+  // );
+  
 }
