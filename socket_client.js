@@ -28,9 +28,8 @@ let door_info_pin = new Array(); // тут хранится информация
 door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
-  // console.log(door_info_pin[0].servo_pin);
+  open_door(0);
   led_lighting_door_on(0);
-  led_lighting_door_off(0);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
 }
@@ -58,7 +57,12 @@ function git_info_at_start() {
 }
 
 // Функции управления с IoT элементами
-function open_door(number_door) {}
+function open_door(number_door) {
+  let servo_pin = door_info_pin[number_door].servo_pin;
+  console.log(servo_pin)
+  let servo = new gpio(led_pin, "out");
+  servo.writeSync(1);
+}
 
 function close_door(number_door) {}
 
