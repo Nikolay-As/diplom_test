@@ -29,7 +29,7 @@ door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   open_door(0);
-  led_lighting_door_on(0);
+  led_lighting_door_off(0);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
 }
