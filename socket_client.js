@@ -23,7 +23,6 @@ let door_info_pin = new Array(); // тут хранится информация
 //   led.writeSync(led.readSync() ^ 1);
 // });
 
-
 door_info_pin = git_info_at_start();
 console.log(door_info_pin);
 if (door_info_pin.length != 0) {
@@ -52,7 +51,6 @@ function git_info_at_start() {
         led_lighting_pin: row.led_lighting_pin,
       };
       door_info_pin.push(structure);
-      
     }
   }
   return door_info_pin;
@@ -66,36 +64,40 @@ function close_door(number_door) {}
 // Функции связанные с SQL
 function runQueries(queries_text, parametr = null) {
   let result = new Array();
- let db =  new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE,async (err) => { 
-    if (err) {
-      console.log("Getting error " + err);
-      return result;
-    } else {
-      if (parametr) {
-        await db.all(queries_text, parametr, (err, rows) => {
-          if (err) {
-            console.log("Getting error " + err);
-            return result;
-          } else {
-            console.log("nen1")
-            result = rows;
-            return result;
-          }
-        });
+  let db = new sqlite3.Database(
+    dbFilePath,
+    sqlite3.OPEN_READWRITE,
+    async (err) => {
+      if (err) {
+        console.log("Getting error " + err);
+        return result;
       } else {
-        await db.all(queries_text, (err, rows) => {
-          if (err) {
-            console.log("Getting error " + err);
-            return result;
-          } else {
-            result = rows;
-            return result;
-          }
-        });
+        if (parametr) {
+          await db.all(queries_text, parametr, (err, rows) => {
+            if (err) {
+              console.log("Getting error " + err);
+              return result;
+            } else {
+              console.log("nen1");
+              result = rows;
+              return result;
+            }
+          });
+        } else {
+          await db.all(queries_text, (err, rows) => {
+            if (err) {
+              console.log("Getting error " + err);
+              return result;
+            } else {
+              result = rows;
+              return result;
+            }
+          });
+        }
       }
     }
-  });
+  );
   db.close();
-  console.log("nen")
+  console.log("nen");
   return result;
 }
