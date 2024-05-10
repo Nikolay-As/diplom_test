@@ -31,7 +31,7 @@ function git_info_at_start() {
     }
   });
    db.serialize(() => {
-    db.run(`SELECT * FROM door_info`, (err, row) => {
+    db.all(`SELECT * FROM door_info`, (err, row) => {
       if (err) {
         console.error(err.message);
       } else {
