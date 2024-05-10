@@ -24,7 +24,7 @@ let door_info_pin = new Array(); // тут хранится информация
 // });
 
 
-door_info_pin = git_info_at_start();
+door_info_pin = await git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   console.log(door_info_pin[0]);
@@ -33,11 +33,11 @@ if (door_info_pin.length != 0) {
 }
 
 // Системные функции
-function git_info_at_start() {
+async function git_info_at_start() {
   let door_info_pin = new Array();
 
   queries_text = `SELECT * FROM door_info`;
-  result = runQueries(queries_text);
+  result = await runQueries(queries_text);
   console.log(result);
   if (result.length != 0) {
     for (let row of result) {
@@ -95,5 +95,4 @@ async function runQueries(queries_text, parametr = null) {
       }
     }
   });
-  console.log("nen")
 }
