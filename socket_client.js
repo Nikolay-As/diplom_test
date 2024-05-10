@@ -64,9 +64,9 @@ function open_door(number_door) {}
 function close_door(number_door) {}
 
 // Функции связанные с SQL
-function runQueries(queries_text, parametr = null) {
+async function runQueries(queries_text, parametr = null) {
   let result = new Array();
-  let db = new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => {
+ let db =  await new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => { 
     if (err) {
       console.log("Getting error " + err);
       return result;
