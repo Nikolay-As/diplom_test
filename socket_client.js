@@ -61,7 +61,7 @@ function git_info_at_start() {
 function open_door(number_door) {
   let servo_pin = door_info_pin[number_door].servo_pin;
   console.log(servo_pin);
-  let servo = new gpio_servo(servo_pin, {mode: Gpio.OUTPUT});
+  let servo = new gpio_servo(servo_pin, {mode: gpio_servo.OUTPUT});
   let pulseWidth = 1000;
   let increment = 100;
   setInterval(() => {
