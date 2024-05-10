@@ -24,6 +24,7 @@ const dbFilePath = 'box.db';
 
 let db = new sqlite3.Database(dbFilePath, (err) => {
   if (err) {
+    console.error("ошибка");
     console.error(err.message);
   }
   console.log('Connected to the chinook database.');
