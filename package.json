@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Nikolay-As/diplom_test#readme",
   "dependencies": {
+    "better-sqlite3": "^9.6.0",
     "fs": "^0.0.1-security",
     "nodemon": "^3.1.0",
     "onoff": "^6.0.3",
