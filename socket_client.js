@@ -48,15 +48,24 @@ function git_info_at_start() {
         console.log(structure)
       }
     });
+
+    db.close((err) => {
+      if (err) {
+        console.error(err.message);
+      }
+    });
+    console.log(door_info_pin)
+    return door_info_pin;
+
   });
 
-  db.close((err) => {
-    if (err) {
-      console.error(err.message);
-    }
-  });
-  console.log(door_info_pin)
-  return door_info_pin;
+  // db.close((err) => {
+  //   if (err) {
+  //     console.error(err.message);
+  //   }
+  // });
+  // console.log(door_info_pin)
+  // return door_info_pin;
 }
 
 
