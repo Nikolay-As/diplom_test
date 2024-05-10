@@ -69,7 +69,7 @@ function led_lighting_door_on(number_door) {
   console.log(led.readSync())
   led.writeSync(led.readSync() ^ 1);
   console.log(led.readSync())
-  led.writeSync(led.readSync() ^ 1);
+  //led.writeSync(led.readSync() ^ 1);
 }
 function led_lighting_door_off(number_door) {
 
