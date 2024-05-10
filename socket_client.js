@@ -10,7 +10,7 @@ const led_pin = 575; // gpio 4
 const gpio = require("onoff").Gpio; // Подключаем библиотеку для работы с gpio
 const led = new gpio(led_pin, "out");
 const sqlite3 = require("sqlite3");
-const dbFilePath = "/box.db";
+const dbFilePath = "./box.db";
 
 // socket.on("connect", () => {
 //   socket.emit("authorization",{id : 1})
