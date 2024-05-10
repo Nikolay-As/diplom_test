@@ -28,7 +28,7 @@ let door_info_pin = new Array(); // тут хранится информация
 door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
-  console.log(door_info_pin);
+  console.log(door_info_pin[0].servo_pin);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
 }
