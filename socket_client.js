@@ -34,11 +34,11 @@ if (door_info_pin.length != 0) {
 }
 
 // Системные функции
-async function git_info_at_start() {
+function git_info_at_start() {
   let door_info_pin = new Array();
 
   queries_text = `SELECT * FROM door_info`;
-  result = await runQueries(queries_text);
+  result = runQueries(queries_text);
   console.log(result);
   if (result.length != 0) {
     for (let row of result) {
@@ -65,15 +65,15 @@ function open_door(number_door) {}
 function close_door(number_door) {}
 
 // Функции связанные с SQL
-async function runQueries(queries_text, parametr = null) {
+function runQueries(queries_text, parametr = null) {
   let result = new Array();
- let db =  await new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => { 
+ let db =  new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE,async (err) => { 
     if (err) {
       console.log("Getting error " + err);
       return result;
     } else {
       if (parametr) {
-        db.all(queries_text, parametr, (err, rows) => {
+        await db.all(queries_text, parametr, (err, rows) => {
           if (err) {
             console.log("Getting error " + err);
             return result;
@@ -84,7 +84,7 @@ async function runQueries(queries_text, parametr = null) {
           }
         });
       } else {
-        db.all(queries_text, (err, rows) => {
+        await db.all(queries_text, (err, rows) => {
           if (err) {
             console.log("Getting error " + err);
             return result;
@@ -96,4 +96,5 @@ async function runQueries(queries_text, parametr = null) {
       }
     }
   });
+  return result;
 }
