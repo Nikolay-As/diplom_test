@@ -38,7 +38,7 @@ function git_info_at_start() {
 
   queries_text = `SELECT * FROM door_info`;
   result = runQueries(queries_text);
-
+  console.log(result);
   if (result.length != 0) {
     for (let row of result) {
       let structure = {
