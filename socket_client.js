@@ -30,7 +30,7 @@ door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   open_door(0);
-  led_lighting_door_off(0);
+  //led_lighting_door_off(0);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
 }
@@ -66,7 +66,7 @@ function open_door(number_door) {
   let pulseWidth = 1000;
   let increment = 100;
   setInterval(() => {
-    servo.writeSync(pulseWidth);
+    servo.servoWrite(pulseWidth);
   
     pulseWidth += increment;
     if (pulseWidth >= 2000) {
