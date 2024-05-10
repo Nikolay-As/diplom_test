@@ -75,7 +75,6 @@ function runQueries(queries_text, parametr = null) {
             console.log("Getting error " + err);
             return result;
           } else {
-            console.log(rows);
             result = rows;
             return result;
           }
@@ -86,7 +85,6 @@ function runQueries(queries_text, parametr = null) {
             console.log("Getting error " + err);
             return result;
           } else {
-            console.log(rows);
             result = rows;
             return result;
           }
