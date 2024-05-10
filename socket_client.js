@@ -67,7 +67,7 @@ function close_door(number_door) {}
  function runQueries(queries_text, parametr = null) {
 
   var rows = db.prepare(queries_text).all();
-  console.log(rows);
+  console.log(rows); 
 
   // let result = new Array();
   // let db =  new sqlite3.Database(
