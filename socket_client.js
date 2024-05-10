@@ -30,11 +30,12 @@ function git_info_at_start() {
       console.error(err.message);
     }
   });
-  db.serialize(() => {
-    db.each(`SELECT * FROM door_info`, (err, row) => {
+   db.serialize(() => {
+    db.run(`SELECT * FROM door_info`, (err, row) => {
       if (err) {
         console.error(err.message);
       } else {
+        console.log(row)
         let  structure = {
           id: row.id,
           servo_pin: row.servo_pin,
@@ -49,13 +50,13 @@ function git_info_at_start() {
       }
     });
 
-    db.close((err) => {
-      if (err) {
-        console.error(err.message);
-      }
-    });
-    console.log(door_info_pin)
-    return door_info_pin;
+    // db.close((err) => {
+    //   if (err) {
+    //     console.error(err.message);
+    //   }
+    // });
+    // console.log(door_info_pin)
+    // return door_info_pin;
 
   });
 
