@@ -22,7 +22,6 @@
     "onoff": "^6.0.3",
     "pi-gpio": "^0.0.8",
     "socket.io-client": "^4.7.5",
-    "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   }
 }
