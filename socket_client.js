@@ -25,50 +25,49 @@ let door_info_pin = new Array(); // тут хранится информация
 
 function git_info_at_start() {
   let door_info_pin = new Array();
-  let db = new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => {
-    if (err) {
-      console.error(err.message);
-    }
-  });
-   db.serialize(() => {
-    db.all(`SELECT * FROM door_info`, (err, row) => {
-      if (err) {
-        console.error(err.message);
-      } else {
-        console.log(row)
-        // let  structure = {
-        //   id: row.id,
-        //   servo_pin: row.servo_pin,
-        //   led_bike_pin: row.led_bike_pin,
-        //   button_bike_pin: row.button_bike_pin,
-        //   buzzer_pin: row.buzzer_pin,
-        //   led_buzzer_pin: row.led_buzzer_pin,
-        //   led_lighting_pin: row.led_lighting_pin
-        // };
-        // door_info_pin.push(structure);
-        // console.log(structure)
-      }
-    });
 
-    // db.close((err) => {
-    //   if (err) {
-    //     console.error(err.message);
-    //   }
-    // });
-    // console.log(door_info_pin)
-    // return door_info_pin;
+  queries_text = `SELECT * FROM door_info`;
+  door_info_pin = runQueries(queries_text);
+  console.log(door_info_pin);
+  return door_info_pin;
 
-  });
+  // db.serialize(() => {
+  //   db.all(`SELECT * FROM door_info`, (err, row) => {
+  //     if (err) {
+  //       console.error(err.message);
+  //     } else {
+  //       console.log(row);
+  //       // let  structure = {
+  //       //   id: row.id,
+  //       //   servo_pin: row.servo_pin,
+  //       //   led_bike_pin: row.led_bike_pin,
+  //       //   button_bike_pin: row.button_bike_pin,
+  //       //   buzzer_pin: row.buzzer_pin,
+  //       //   led_buzzer_pin: row.led_buzzer_pin,
+  //       //   led_lighting_pin: row.led_lighting_pin
+  //       // };
+  //       // door_info_pin.push(structure);
+  //       // console.log(structure)
+  //     }
+  //   });
 
-  // db.close((err) => {
-  //   if (err) {
-  //     console.error(err.message);
-  //   }
+  //   // db.close((err) => {
+  //   //   if (err) {
+  //   //     console.error(err.message);
+  //   //   }
+  //   // });
+  //   // console.log(door_info_pin)
+  //   // return door_info_pin;
   // });
-  // console.log(door_info_pin)
-  // return door_info_pin;
-}
 
+  // // db.close((err) => {
+  // //   if (err) {
+  // //     console.error(err.message);
+  // //   }
+  // // });
+  // // console.log(door_info_pin)
+  // // return door_info_pin;
+}
 
 door_info_pin = git_info_at_start();
 // console.log(door_info_pin)
@@ -78,6 +77,26 @@ door_info_pin = git_info_at_start();
 // } else {
 //   console.log("Приложение не готово к работе, проверьте БД");
 // }
+
+function runQueries(queries_text, parametr = null) {
+  let result = new Array();
+
+  let db = new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return result;
+    }
+  });
+
+  db.all(queries_text, parametr, (err, rows) => {
+    if (err) {
+      console.error(err.message);
+      return result;
+    }
+    result = rows;
+    return result;
+  });
+}
 
 function open_door(number_door) {}
 
