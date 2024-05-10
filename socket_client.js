@@ -11,6 +11,7 @@ const gpio = require("onoff").Gpio; // Подключаем библиотеку
 const led = new gpio(led_pin, "out");
 const sqlite3 = require("sqlite3");
 const dbFilePath = "./box.db";
+let door_info_pin = new Array(); // тут хранится информация по пинам
 
 // socket.on("connect", () => {
 //   socket.emit("authorization",{id : 1})
@@ -33,27 +34,38 @@ function git_info_at_start() {
     db.each(`SELECT * FROM door_info`, (err, row) => {
       if (err) {
         console.error(err.message);
-      }else{
-      console.log(row.id);
+        return false;
+      } else {
+        let structure = {
+          id: row.id,
+          servo_pin: row.servo_pin,
+          led_bike_pin: row.led_bike_pin,
+          button_bike_pin: row.button_bike_pin,
+          buzzer_pin: row.buzzer_pin,
+          led_buzzer_pin: row.led_buzzer_pin,
+          led_lighting_pin: row.led_lighting_pin,
+        };
+        door_info_pin.push(structure);
       }
     });
   });
-  
+
   db.close((err) => {
     if (err) {
       console.error(err.message);
+      return false;
     }
   });
   return true;
 }
 
-if (git_info_at_start()){
-  console.log("Приложение  готово к работе!")
-}else{
-  console.log("Приложение не готово к работе, проверьте БД")
+if (git_info_at_start()) {
+  console.log("Приложение  готово к работе!");
+  console.log(door_info_pin[0]);
+} else {
+  console.log("Приложение не готово к работе, проверьте БД");
 }
 
 function open_door(number_door) {}
 
 function close_door(number_door) {}
-
