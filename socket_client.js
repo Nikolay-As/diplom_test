@@ -54,6 +54,7 @@ function git_info_at_start() {
       console.error(err.message);
     }
   });
+  console.log(door_info_pin)
   return door_info_pin;
 }
 
