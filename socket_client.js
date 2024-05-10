@@ -30,6 +30,7 @@ if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   // console.log(door_info_pin[0].servo_pin);
   led_lighting_door_on(0);
+  led_lighting_door_off(0);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
 }
@@ -65,14 +66,14 @@ function led_lighting_door_on(number_door) {
   let led_pin = door_info_pin[number_door].led_lighting_pin;
   console.log(led_pin)
   let led = new gpio(led_pin, "out");
-  //led.writeSync(1);
-  console.log(led.readSync())
-  led.writeSync(led.readSync() ^ 1);
-  console.log(led.readSync())
+  led.writeSync(1);
   //led.writeSync(led.readSync() ^ 1);
 }
 function led_lighting_door_off(number_door) {
-
+  let led_pin = door_info_pin[number_door].led_lighting_pin;
+  console.log(led_pin)
+  let led = new gpio(led_pin, "out");
+  led.writeSync(0);
 }
 
 // Функции связанные с SQL
