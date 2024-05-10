@@ -63,6 +63,7 @@ function close_door(number_door) {}
 
 function led_lighting_door_on(number_door) {
   let led_pin = door_info_pin[number_door].led_lighting_pin;
+  console.log(led_pin)
   let led = new gpio(led_pin, "out");
   led.writeSync(1);
   //led.writeSync(led.readSync() ^ 1);
