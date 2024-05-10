@@ -7,7 +7,7 @@
 // var socket = io(url_socket_server, { reconnect: true });
 
 //const led_pin = 575; // gpio 4
-const gpio = require("onoff").Gpio; // Подключаем библиотеку для работы с gpio
+//const gpio = require("onoff").Gpio; // Подключаем библиотеку для работы с gpio
 const gpio_servo = require("pigpio").Gpio;
 //const led = new gpio(led_pin, "out");
 // const sqlite3 = require("sqlite3");
