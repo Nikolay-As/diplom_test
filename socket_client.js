@@ -93,6 +93,7 @@ function runQueries(queries_text, parametr = null) {
       console.error(err.message);
       return result;
     }
+    console.log(result)
     result = rows;
     return result;
   });
