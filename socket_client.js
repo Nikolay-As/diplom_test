@@ -23,7 +23,7 @@ let door_info_pin = new Array(); // тут хранится информация
 //   led.writeSync(led.readSync() ^ 1);
 // });
 
-function git_info_at_start() {
+function git_info_at_start(door_info_pin) {
   let db = new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message);
