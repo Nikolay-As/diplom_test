@@ -97,7 +97,7 @@ async function runQueries(queries_text, parametr = null) {
       }
     }
   );
-  db.close();
-  console.log("nen");
-  return result;
+  // db.close();
+  // console.log("nen");
+  // return result;
 }
