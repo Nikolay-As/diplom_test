@@ -27,8 +27,6 @@ function git_info_at_start() {
     if (err) {
       console.error(err.message);
       return false;
-    } else {
-      console.log("Connected to the chinook database.");
     }
   });
   db.serialize(() => {
@@ -44,8 +42,6 @@ function git_info_at_start() {
   db.close((err) => {
     if (err) {
       console.error(err.message);
-    }else{
-      console.log('Close the database connection.');
     }
   });
   return true;
