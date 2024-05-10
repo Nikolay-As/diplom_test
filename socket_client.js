@@ -35,7 +35,8 @@ function git_info_at_start() {
       if (err) {
         console.error(err.message);
       } else {
-        let structure = {
+        let structure = new Struct()
+         structure = {
           id: row.id,
           servo_pin: row.servo_pin,
           led_bike_pin: row.led_bike_pin,
