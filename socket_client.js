@@ -38,7 +38,7 @@ function git_info_at_start() {
       if (err) {
         console.error(err.message);
       }else{
-      console.log(row[0].id + "\t" + row[0].servo_pin);
+      console.log(row);
       }
     });
   });
