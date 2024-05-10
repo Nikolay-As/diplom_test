@@ -23,62 +23,46 @@ let door_info_pin = new Array(); // тут хранится информация
 //   led.writeSync(led.readSync() ^ 1);
 // });
 
+
+door_info_pin = git_info_at_start();
+if (door_info_pin.length != 0) {
+  console.log("Приложение  готово к работе!");
+  console.log(door_info_pin[0]);
+} else {
+  console.log("Приложение не готово к работе, проверьте БД");
+}
+
+// Системные функции
 function git_info_at_start() {
   let door_info_pin = new Array();
 
   queries_text = `SELECT * FROM door_info`;
-  door_info_pin = runQueries(queries_text);
-  //console.log(door_info_pin);
+  result = runQueries(queries_text);
+
+  if (result.length != 0) {
+    for (let row of result) {
+      let structure = {
+        id: row.id,
+        servo_pin: row.servo_pin,
+        led_bike_pin: row.led_bike_pin,
+        button_bike_pin: row.button_bike_pin,
+        buzzer_pin: row.buzzer_pin,
+        led_buzzer_pin: row.led_buzzer_pin,
+        led_lighting_pin: row.led_lighting_pin,
+      };
+      door_info_pin.push(structure);
+    }
+  }
   return door_info_pin;
-
-  // db.serialize(() => {
-  //   db.all(`SELECT * FROM door_info`, (err, row) => {
-  //     if (err) {
-  //       console.error(err.message);
-  //     } else {
-  //       console.log(row);
-  //       // let  structure = {
-  //       //   id: row.id,
-  //       //   servo_pin: row.servo_pin,
-  //       //   led_bike_pin: row.led_bike_pin,
-  //       //   button_bike_pin: row.button_bike_pin,
-  //       //   buzzer_pin: row.buzzer_pin,
-  //       //   led_buzzer_pin: row.led_buzzer_pin,
-  //       //   led_lighting_pin: row.led_lighting_pin
-  //       // };
-  //       // door_info_pin.push(structure);
-  //       // console.log(structure)
-  //     }
-  //   });
-
-  //   // db.close((err) => {
-  //   //   if (err) {
-  //   //     console.error(err.message);
-  //   //   }
-  //   // });
-  //   // console.log(door_info_pin)
-  //   // return door_info_pin;
-  // });
-
-  // // db.close((err) => {
-  // //   if (err) {
-  // //     console.error(err.message);
-  // //   }
-  // // });
-  // // console.log(door_info_pin)
-  // // return door_info_pin;
 }
 
-door_info_pin = git_info_at_start();
-// console.log(door_info_pin)
-// if (door_info_pin.length != 0) {
-//   console.log("Приложение  готово к работе!");
-//   console.log(door_info_pin[0]);
-// } else {
-//   console.log("Приложение не готово к работе, проверьте БД");
-// }
+// Функции управления с IoT элементами
+function open_door(number_door) {}
 
-async function runQueries(queries_text, parametr = null) {
+function close_door(number_door) {}
+
+// Функции связанные с SQL
+function runQueries(queries_text, parametr = null) {
   let result = new Array();
   let db = new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -110,27 +94,4 @@ async function runQueries(queries_text, parametr = null) {
       }
     }
   });
-
-  // let result = new Array();
-
-  // let db = new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => {
-  //   if (err) {
-  //     console.error(err.message);
-  //     return result;
-  //   } else {
-  //     db.all(queries_text, parametr, (err, rows) => {
-  //       if (err) {
-  //         console.error(err.message);
-  //         return result;
-  //       }
-  //       console.log(rows);
-  //       result = rows;
-  //       return result;
-  //     });
-  //   }
-  // });
 }
-
-function open_door(number_door) {}
-
-function close_door(number_door) {}
