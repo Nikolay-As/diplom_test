@@ -22,7 +22,7 @@ const dbFilePath = '/box.db';
 //   led.writeSync(led.readSync() ^ 1);
 // });
 
-let db = new sqlite3.Database(dbFilePath, (err) => {
+let db = new sqlite3.Database('/box.db', (err) => {
   if (err) {
     console.error("ошибка");
     console.error(err.message);
