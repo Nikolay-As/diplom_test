@@ -55,7 +55,6 @@ function git_info_at_start() {
       
     }
   }
-  db.close();
   return door_info_pin;
 }
 
@@ -96,5 +95,7 @@ function runQueries(queries_text, parametr = null) {
       }
     }
   });
+  db.close();
+  console.log("nen")
   return result;
 }
