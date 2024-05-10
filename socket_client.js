@@ -8,6 +8,7 @@
 
 //const led_pin = 575; // gpio 4
 const gpio = require("onoff").Gpio; // Подключаем библиотеку для работы с gpio
+const gpio_servo = require("pigpio").Gpio;
 //const led = new gpio(led_pin, "out");
 // const sqlite3 = require("sqlite3");
 const dbFilePath = "./box.db";
@@ -59,23 +60,34 @@ function git_info_at_start() {
 // Функции управления с IoT элементами
 function open_door(number_door) {
   let servo_pin = door_info_pin[number_door].servo_pin;
-  console.log(servo_pin)
-  let servo = new gpio(servo_pin, "out");
-  servo.writeSync(0);
+  console.log(servo_pin);
+  let servo = new gpio_servo(servo_pin, {mode: Gpio.OUTPUT});
+  let pulseWidth = 1000;
+  let increment = 100;
+  setInterval(() => {
+    servo.writeSync(pulseWidth);
+  
+    pulseWidth += increment;
+    if (pulseWidth >= 2000) {
+      increment = -100;
+    } else if (pulseWidth <= 1000) {
+      increment = 100;
+    }
+  }, 1000);
 }
 
 function close_door(number_door) {}
 
 function led_lighting_door_on(number_door) {
   let led_pin = door_info_pin[number_door].led_lighting_pin;
-  console.log(led_pin)
+  console.log(led_pin);
   let led = new gpio(led_pin, "out");
   led.writeSync(1);
   //led.writeSync(led.readSync() ^ 1);
 }
 function led_lighting_door_off(number_door) {
   let led_pin = door_info_pin[number_door].led_lighting_pin;
-  console.log(led_pin)
+  console.log(led_pin);
   let led = new gpio(led_pin, "out");
   led.writeSync(0);
 }
