@@ -22,12 +22,13 @@ const dbFilePath = '/box.db';
 //   led.writeSync(led.readSync() ^ 1);
 // });
 
-let db = new sqlite3.Database('./box.db', sqlite3.OPEN_READWRITE, (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Connected to the chinook database.');
-});
+// let db = new sqlite3.Database('./box.db', sqlite3.OPEN_READWRITE, (err) => {
+//   if (err) {
+  console.log("привет");
+//     console.error(err.message);
+//   }
+//   console.log('Connected to the chinook database.');
+// });
 
 function open_door(number_door){
 
