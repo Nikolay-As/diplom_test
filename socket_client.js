@@ -51,8 +51,10 @@ function git_info_at_start() {
         led_lighting_pin: row.led_lighting_pin,
       };
       door_info_pin.push(structure);
+      
     }
   }
+  db.close();
   return door_info_pin;
 }
 
@@ -75,6 +77,7 @@ function runQueries(queries_text, parametr = null) {
             console.log("Getting error " + err);
             return result;
           } else {
+            console.log("nen1")
             result = rows;
             return result;
           }
@@ -92,4 +95,5 @@ function runQueries(queries_text, parametr = null) {
       }
     }
   });
+  console.log("nen")
 }
