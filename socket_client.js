@@ -23,18 +23,17 @@ let door_info_pin = new Array(); // тут хранится информация
 //   led.writeSync(led.readSync() ^ 1);
 // });
 
-function git_info_at_start(door_info_pin) {
+function git_info_at_start() {
+  let door_info_pin = new Array();
   let db = new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message);
-      return false;
     }
   });
   db.serialize(() => {
     db.each(`SELECT * FROM door_info`, (err, row) => {
       if (err) {
         console.error(err.message);
-        return false;
       } else {
         let structure = {
           id: row.id,
@@ -53,13 +52,14 @@ function git_info_at_start(door_info_pin) {
   db.close((err) => {
     if (err) {
       console.error(err.message);
-      return false;
     }
   });
-  return true;
+  return door_info_pin;
 }
 
-if (git_info_at_start()) {
+
+door_info_pin = git_info_at_start();
+if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   console.log(door_info_pin[0]);
 } else {
