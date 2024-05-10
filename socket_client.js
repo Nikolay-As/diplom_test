@@ -61,7 +61,7 @@ function open_door(number_door) {
   let servo_pin = door_info_pin[number_door].servo_pin;
   console.log(servo_pin)
   let servo = new gpio(servo_pin, "out");
-  servo.writeSync(1);
+  servo.writeSync(0);
 }
 
 function close_door(number_door) {}
