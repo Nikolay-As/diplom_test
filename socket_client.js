@@ -91,7 +91,7 @@ function runQueries(queries_text, parametr = null) {
           console.error(err.message);
           return result;
         }
-        console.log(result);
+        console.log(rows);
         result = rows;
         return result;
       });
