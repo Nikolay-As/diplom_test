@@ -85,16 +85,29 @@ async function runQueries(queries_text, parametr = null) {
       console.log("Getting error " + err);
       return result;
     } else {
-      db.all(queries_text, (err, rows) => {
-        if (err) {
-          console.log("Getting error " + err);
-          return result;
-        } else {
-          console.log(rows);
-          result = rows;
-          return result;
-        }
-      });
+      if (parametr) {
+        db.all(queries_text, parametr, (err, rows) => {
+          if (err) {
+            console.log("Getting error " + err);
+            return result;
+          } else {
+            console.log(rows);
+            result = rows;
+            return result;
+          }
+        });
+      } else {
+        db.all(queries_text, (err, rows) => {
+          if (err) {
+            console.log("Getting error " + err);
+            return result;
+          } else {
+            console.log(rows);
+            result = rows;
+            return result;
+          }
+        });
+      }
     }
   });
 
