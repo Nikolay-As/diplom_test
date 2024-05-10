@@ -9,7 +9,7 @@
 const led_pin = 575; // gpio 4
 const gpio = require("onoff").Gpio; // Подключаем библиотеку для работы с gpio
 const led = new gpio(led_pin, "out");
-const sqlite3 = require("sqlite3");
+// const sqlite3 = require("sqlite3");
 const dbFilePath = "./box.db";
 var sqlite = require("better-sqlite3");
 var db = new sqlite(dbFilePath);
@@ -29,7 +29,7 @@ door_info_pin = git_info_at_start();
 console.log(door_info_pin);
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
-  console.log(door_info_pin[0]);
+  console.log(door_info_pin);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
 }
@@ -37,10 +37,8 @@ if (door_info_pin.length != 0) {
 // Системные функции
 function git_info_at_start() {
   let door_info_pin = new Array();
-
   queries_text = `SELECT * FROM door_info`;
   result = runQueries(queries_text);
-  console.log(result);
   if (result.length != 0) {
     for (let row of result) {
       let structure = {
@@ -64,12 +62,16 @@ function open_door(number_door) {}
 function close_door(number_door) {}
 
 // Функции связанные с SQL
- function runQueries(queries_text, parametr = null) {
-
-  var rows = db.prepare(queries_text).all();
-  console.log(rows); 
-
-  // let result = new Array();
+function runQueries(queries_text, parametr = null) {
+  let result = new Array();
+  try {
+    result = db.prepare(queries_text).all();
+    return result;
+  } catch (err) {
+    console.log("Getting error " + err);
+    return result;
+  }
+  //var rows = db.prepare(queries_text).all();
   // let db =  new sqlite3.Database(
   //   dbFilePath,
   //   sqlite3.OPEN_READWRITE,
@@ -103,5 +105,4 @@ function close_door(number_door) {}
   //     }
   //   }
   // );
-  
 }
