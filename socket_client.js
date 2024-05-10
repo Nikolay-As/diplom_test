@@ -22,8 +22,6 @@ const dbFilePath = "./box.db";
 //   led.writeSync(led.readSync() ^ 1);
 // });
 
-git_info_at_start();
-
 function git_info_at_start() {
   let db = new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -51,6 +49,12 @@ function git_info_at_start() {
     }
   });
   return true;
+}
+
+if (git_info_at_start()){
+  console.log("Приложение  готово к работе!")
+}else{
+  console.log("Приложение не готово к работе, проверьте БД")
 }
 
 function open_door(number_door) {}
