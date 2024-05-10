@@ -9,8 +9,8 @@
 const led_pin = 575; // gpio 4
 const gpio = require("onoff").Gpio; // Подключаем библиотеку для работы с gpio
 const led = new gpio(led_pin, "out");
-const sqlite3 = require('sqlite3')
-const dbFilePath = '/box.db';
+const sqlite3 = require("sqlite3");
+const dbFilePath = "/box.db";
 
 // socket.on("connect", () => {
 //   socket.emit("authorization",{id : 1})
@@ -22,21 +22,38 @@ const dbFilePath = '/box.db';
 //   led.writeSync(led.readSync() ^ 1);
 // });
 
-let db = new sqlite3.Database('./box.db', sqlite3.OPEN_READWRITE, (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Connected to the chinook database.');
-});
+git_info_at_start();
 
-function open_door(number_door){
-
-}
-
-function close_door(number_door){
+function git_info_at_start() {
+  let db = new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return false;
+    } else {
+      console.log("Connected to the chinook database.");
+    }
+  });
+  db.serialize(() => {
+    db.each(`SELECT * FROM door_info`, (err, row) => {
+      if (err) {
+        console.error(err.message);
+      }else{
+      console.log(row[0].id + "\t" + row[0].servo_pin);
+      }
+    });
+  });
   
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }else{
+      console.log('Close the database connection.');
+    }
+  });
+  return true;
 }
 
-function connect_sql(){
-  
-}
+function open_door(number_door) {}
+
+function close_door(number_door) {}
+
