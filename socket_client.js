@@ -6,9 +6,9 @@
 // const url_socket_server = "http://192.168.0.16:" + port;
 // var socket = io(url_socket_server, { reconnect: true });
 
-const led_pin = 575; // gpio 4
+//const led_pin = 575; // gpio 4
 const gpio = require("onoff").Gpio; // Подключаем библиотеку для работы с gpio
-const led = new gpio(led_pin, "out");
+//const led = new gpio(led_pin, "out");
 // const sqlite3 = require("sqlite3");
 const dbFilePath = "./box.db";
 var sqlite = require("better-sqlite3");
@@ -29,6 +29,7 @@ door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   console.log(door_info_pin[0].servo_pin);
+  led_lighting_door_on(0);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
 }
@@ -59,6 +60,16 @@ function git_info_at_start() {
 function open_door(number_door) {}
 
 function close_door(number_door) {}
+
+function led_lighting_door_on(number_door) {
+  let led_pin = door_info_pin[number_door].led_lighting_pin;
+  let led = new gpio(led_pin, "out");
+  console.log(led.readSync())
+  //led.writeSync(led.readSync() ^ 1);
+}
+function led_lighting_door_off(number_door) {
+
+}
 
 // Функции связанные с SQL
 function runQueries(queries_text, parametr = null) {
