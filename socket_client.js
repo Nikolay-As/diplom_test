@@ -31,6 +31,11 @@ door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   open_door(0);
+  setTimeout(close_door(0), 2000);
+  setTimeout(open_door(0), 2000);
+  setTimeout(close_door(0), 2000);
+  setTimeout(open_door(0), 2000);
+  setTimeout(close_door(0), 2000);
   //led_lighting_door_off(0);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
@@ -66,7 +71,12 @@ function open_door(number_door) {
   led.writeSync(1);
 }
 
-function close_door(number_door) {}
+function close_door(number_door) {
+  let servo_pin = door_info_pin[number_door].servo_pin;
+  console.log(servo_pin);
+  let led = new gpio(servo_pin, "out");
+  led.writeSync(0);
+}
 
 function led_lighting_door_on(number_door) {
   let led_pin = door_info_pin[number_door].led_lighting_pin;
