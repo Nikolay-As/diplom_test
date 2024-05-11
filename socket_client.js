@@ -8,7 +8,6 @@
 
 //const led_pin = 575; // gpio 4
 //const gpio = require("onoff").Gpio; // Подключаем библиотеку для работы с gpio
-const pigpio = require("pigpio");
 pigpio.configureSocketPort(8889);
 var gpio_servo = pigpio.Gpio;
 //const led = new gpio(led_pin, "out");
@@ -61,22 +60,10 @@ function git_info_at_start() {
 
 // Функции управления с IoT элементами
 function open_door(number_door) {
-  let servo_pin = door_info_pin[number_door].led_lighting_pin;
-  servo_pin = 4
-  console.log(servo_pin);
-  let servo = new gpio_servo(servo_pin, {mode: gpio_servo.OUTPUT});
-  let pulseWidth = 1000;
-  let increment = 100;
-  setInterval(() => {
-    servo.servoWrite(pulseWidth);
-  
-    pulseWidth += increment;
-    if (pulseWidth >= 2000) {
-      increment = -100;
-    } else if (pulseWidth <= 1000) {
-      increment = 100;
-    }
-  }, 1000);
+  let servo_pin = door_info_pin[number_door].servo_pin;
+  console.log(led_pin);
+  let led = new gpio(servo_pin, "out");
+  led.writeSync(1);
 }
 
 function close_door(number_door) {}
