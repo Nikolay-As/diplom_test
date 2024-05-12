@@ -30,7 +30,7 @@ let door_info_pin = new Array(); // тут хранится информация
 door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
-  console.log(rents_start(0));
+  rents_start(0);
   // open_door(0);
   // setTimeout(close_door, 4000, 0);
   // setTimeout(open_door, 8000, 0);
@@ -65,9 +65,9 @@ function git_info_at_start() {
 }
 
 // Функции управления с IoT элементами
-function rents_start_timeout(gpio_button_element) {
+function rents_start_timeout(gpio_button_element, gpio_led_element) {
   gpio_button_element.unexport();
-  return false;
+  gpio_led_element.unexport();
 }
 
 //process.on('SIGINT', ); //function to run when user closes using
@@ -75,7 +75,7 @@ function rents_start_timeout(gpio_button_element) {
 function rents_start(number_door) {
   let button_bike_pin = door_info_pin[number_door].button_bike_pin;
   let led_bike_pin = door_info_pin[number_door].led_bike_pin;
-  let timerId = setTimeout(rents_start_timeout, 20000, 0);
+  let timerId = setTimeout(rents_start_timeout, 5000, 0);
 
   let led = new gpio(led_bike_pin, "out");
   let button = new gpio(button_bike_pin, "in", "both");
@@ -91,7 +91,6 @@ function rents_start(number_door) {
         clearTimeout(timerId);
         button.unexport();
         led.unexport();
-        return true;
       }
     }
   });
