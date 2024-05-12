@@ -85,7 +85,6 @@ function rents_start(number_door) {
       throw err;
     }
     // if (button.readSync() != value) {
-      console.log(value)
       if (value == 1) {
         clearTimeout(timerId);
         button.unexport();
