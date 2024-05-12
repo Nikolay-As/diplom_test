@@ -31,6 +31,10 @@ if (door_info_pin.length != 0) {
     close_door(0);
   });
 
+  socket.on("rent_start", () => {
+    rents_start(0);
+  });
+
 
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
