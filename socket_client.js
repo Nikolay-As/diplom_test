@@ -31,12 +31,12 @@ door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   start_watch_button(0)
-  // open_door(0);
-  // setTimeout(close_door, 4000, 0);
-  // setTimeout(open_door, 8000, 0);
-  // setTimeout(close_door, 12000, 0);
-  // setTimeout(open_door, 16000, 0);
-  // setTimeout(close_door, 20000, 0);
+  open_door(0);
+  setTimeout(close_door, 4000, 0);
+  setTimeout(open_door, 8000, 0);
+  setTimeout(close_door, 12000, 0);
+  setTimeout(open_door, 16000, 0);
+  setTimeout(close_door, 20000, 0);
   //led_lighting_door_off(0);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
