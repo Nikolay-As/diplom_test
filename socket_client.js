@@ -1,4 +1,4 @@
-// const io = require("socket.io-client");
+ const io = require("socket.io-client");
 
 // Если локалхост то не используем url_socket_server
 // иначе const socket = io(url_socket_server);
@@ -14,7 +14,7 @@ let door_info_pin = new Array(); // тут хранится информация
 door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
-  
+
   var socket = io(url_socket_server, { reconnect: true });
 
 
