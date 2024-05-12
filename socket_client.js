@@ -76,7 +76,7 @@ function rents_start(number_door) {
         clearTimeout(timerId);
         button.unexport();
         led_bike_free_off(number_door)
-        console.log("Велосипед успешно припаркован в бокс номер " + number_door + + "! ")
+        console.log("Велосипед успешно припаркован в бокс номер " + (number_door+1) + "! ")
       }
   });
 }
