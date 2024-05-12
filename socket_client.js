@@ -30,13 +30,15 @@ let door_info_pin = new Array(); // тут хранится информация
 door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
+  led_bike_on(number_door)
+  setTimeout(led_bike_off, 4000, 0);
   //start_watch_button(0)
-  open_door(0);
-  setTimeout(close_door, 4000, 0);
-  setTimeout(open_door, 8000, 0);
-  setTimeout(close_door, 12000, 0);
-  setTimeout(open_door, 16000, 0);
-  setTimeout(close_door, 20000, 0);
+  // open_door(0);
+  // setTimeout(close_door, 4000, 0);
+  // setTimeout(open_door, 8000, 0);
+  // setTimeout(close_door, 12000, 0);
+  // setTimeout(open_door, 16000, 0);
+  // setTimeout(close_door, 20000, 0);
   //led_lighting_door_off(0);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
@@ -92,6 +94,21 @@ function close_door(number_door) {
   console.log("Закрыл");
   let servo = new gpio(servo_pin, "out");
   servo.writeSync(0);
+}
+
+function led_bike_on(number_door) {
+  let led_bike_pin = door_info_pin[number_door].led_bike_pin;
+  console.log(led_bike_pin);
+  let led = new gpio(led_bike_pin, "out");
+  led.writeSync(1);
+  //led.writeSync(led.readSync() ^ 1);
+}
+function led_bike_off(number_door) {
+  let led_bike_pin = door_info_pin[number_door].led_bike_pin;
+  console.log(led_bike_pin);
+  let led = new gpio(led_bike_pin, "out");
+  led.writeSync(0);
+  //led.writeSync(led.readSync() ^ 1);
 }
 
 function led_lighting_door_on(number_door) {
