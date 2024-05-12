@@ -4,7 +4,8 @@
   "description": "",
   "main": "socket_client.js",
   "scripts": {
-    "test": "node ."
+    "test": "node .",
+    "start": "nodemon ."
   },
   "repository": {
     "type": "git",
