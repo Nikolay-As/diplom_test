@@ -104,7 +104,7 @@ function open_door(number_door) {
   console.log("Открыл");
   let servo = new gpio(servo_pin, "out");
   servo.writeSync(1);
-  servo.unexport();
+  //servo.unexport();
 }
 
 function close_door(number_door) {
@@ -112,7 +112,7 @@ function close_door(number_door) {
   console.log("Закрыл");
   let servo = new gpio(servo_pin, "out");
   servo.writeSync(0);
-  servo.unexport();
+  //servo.unexport();
 }
 
 function led_bike_on(number_door) {
