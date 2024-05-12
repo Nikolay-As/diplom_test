@@ -11,20 +11,18 @@ var sqlite = require("better-sqlite3");
 var db = new sqlite(dbFilePath);
 let door_info_pin = new Array(); // тут хранится информация по пинам
 
-socket.on("connect", () => {
-  socket.emit("authorization", { id: 1 });
-  console.log("передал успешно id");
-});
-
-socket.on("hello_world", () => {
-  open_door(0);
-});
-
 door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   var socket = io(url_socket_server, { reconnect: true });
-  //rents_start(0);
+  socket.on("connect", () => {
+    socket.emit("authorization", { id: 1 });
+    console.log("передал успешно id");
+  });
+
+  socket.on("hello_world", () => {
+    open_door(0);
+  });
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
 }
