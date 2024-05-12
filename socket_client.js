@@ -76,7 +76,8 @@ function start_watch_button(number_door){
       throw err;
     }
     console.log(value)
-    if(led.readSync != value ){
+    console.log(led.readSync())
+    if(led.readSync() != value ){
       led.writeSync(value);
       button.unexport()
     }
