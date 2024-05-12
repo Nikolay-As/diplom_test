@@ -81,6 +81,8 @@ function start_watch_button(number_door) {
       led.writeSync(value);
       if (value == 1){
         open_door(0)
+        button.unexport()
+        led.unexport()
       }else{
         close_door(0)
       }
