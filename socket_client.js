@@ -70,7 +70,7 @@ function rents_start_timeout(gpio_button_element) {
   return false;
 }
 
-process.on('SIGINT', console.log("ПОКА")); //function to run when user closes using
+//process.on('SIGINT', ); //function to run when user closes using
 
 function rents_start(number_door) {
   let button_bike_pin = door_info_pin[number_door].button_bike_pin;
