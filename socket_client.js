@@ -84,7 +84,7 @@ function rents_start(number_door) {
     if (err) {
       throw err;
     }
-    if (led.readSync() != value) {
+    if (button.readSync() != value) {
       if (value == 1) {
         clearTimeout(timerId);
         button.unexport();
