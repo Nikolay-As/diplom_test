@@ -75,10 +75,11 @@ function rents_start_timeout(gpio_button_element, gpio_led_element) {
 function rents_start(number_door) {
   let button_bike_pin = door_info_pin[number_door].button_bike_pin;
   let led_bike_pin = door_info_pin[number_door].led_bike_pin;
-  let timerId = setTimeout(rents_start_timeout, 5000, 0);
 
   let led = new gpio(led_bike_pin, "out");
   let button = new gpio(button_bike_pin, "in", "both");
+
+  let timerId = setTimeout(rents_start_timeout, 5000, button ,led);
   button.watch((err, value) => {
     if (err) {
       throw err;
