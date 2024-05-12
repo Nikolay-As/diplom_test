@@ -6,12 +6,7 @@
 // const url_socket_server = "http://192.168.0.16:" + port;
 // var socket = io(url_socket_server, { reconnect: true });
 
-//const led_pin = 575; // gpio 4
 const gpio = require("onoff").Gpio; // Подключаем библиотеку для работы с gpio
-// pigpio.configureSocketPort(8889);
-// var gpio_servo = pigpio.Gpio;
-//const led = new gpio(led_pin, "out");
-// const sqlite3 = require("sqlite3");
 const dbFilePath = "./box.db";
 var sqlite = require("better-sqlite3");
 var db = new sqlite(dbFilePath);
@@ -31,13 +26,6 @@ door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
   rents_start(0);
-  // open_door(0);
-  // setTimeout(close_door, 4000, 0);
-  // setTimeout(open_door, 8000, 0);
-  // setTimeout(close_door, 12000, 0);
-  // setTimeout(open_door, 16000, 0);
-  // setTimeout(close_door, 20000, 0);
-  //led_lighting_door_off(0);
 } else {
   console.log("Приложение не готово к работе, проверьте БД");
 }
@@ -84,14 +72,12 @@ function rents_start(number_door) {
     if (err) {
       throw err;
     }
-    // if (button.readSync() != value) {
       if (value == 1) {
         clearTimeout(timerId);
         button.unexport();
         led_bike_free_off(number_door)
-        console.log("Велосипед успешно припаркован!")
+        console.log("Велосипед успешно припаркован в бокс номер " + number_door + + "! ")
       }
-    // }
   });
 }
 
