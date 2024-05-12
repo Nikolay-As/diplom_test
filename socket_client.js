@@ -14,6 +14,8 @@ let door_info_pin = new Array(); // тут хранится информация
 door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
+ led_bike_free_on(0);
+ led_bike_busy_off(0);
 
   var socket = io(url_socket_server, { reconnect: true });
 
