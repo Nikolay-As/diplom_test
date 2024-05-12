@@ -51,12 +51,10 @@ function git_info_at_start() {
     for (let row of result) {
       let structure = {
         id: row.id,
-        servo_pin: row.servo_pin,
-        led_bike_pin: row.led_bike_pin,
+        castle_pin: row.castle_pin,
+        led_bike_busy_pin: row.led_bike_busy_pin,
         button_bike_pin: row.button_bike_pin,
-        buzzer_pin: row.buzzer_pin,
-        led_buzzer_pin: row.led_buzzer_pin,
-        led_lighting_pin: row.led_lighting_pin,
+        led_bike_free_pin: row.led_bike_free_pin
       };
       door_info_pin.push(structure);
     }
@@ -65,83 +63,75 @@ function git_info_at_start() {
 }
 
 // Функции управления с IoT элементами
-function rents_start_timeout(gpio_button_element, gpio_led_element, number_door) {
+function rents_start_timeout(gpio_button_element, number_door) {
   gpio_button_element.unexport();
-  gpio_led_element.unexport();
-  close_door(number_door)
-  console.log("вы не успели арендовать!")
+  led_bike_busy_off(number_door)
+  console.log("Превышено время ожидания велосипеда!")
 }
 
 //process.on('SIGINT', ); //function to run when user closes using
 
 function rents_start(number_door) {
+  console.log("Поставьте велосипед в бокс!")
   let button_bike_pin = door_info_pin[number_door].button_bike_pin;
-  let led_bike_pin = door_info_pin[number_door].led_bike_pin;
 
-  let led = new gpio(led_bike_pin, "out");
   let button = new gpio(button_bike_pin, "in", "both");
   
-  open_door(number_door)
-  let timerId = setTimeout(rents_start_timeout, 5000, button ,led, number_door);
+  let timerId = setTimeout(rents_start_timeout, 5000, button, number_door);
+  led_bike_free_on(number_door)
+  led_bike_busy_on(number_door)
   button.watch((err, value) => {
     if (err) {
       throw err;
     }
     if (led.readSync() != value) {
       if (value == 1) {
-        led.writeSync(value);
         clearTimeout(timerId);
         button.unexport();
-        led.unexport();
-        close_door(number_door)
+        led_bike_free_off()
       }
     }
   });
 }
 
 function open_door(number_door) {
-  let servo_pin = door_info_pin[number_door].servo_pin;
+  let castle_pin = door_info_pin[number_door].castle_pin;
   console.log("Открыл");
-  let servo = new gpio(servo_pin, "out");
-  servo.writeSync(1);
+  let castle = new gpio(castle_pin, "out");
+  castle.writeSync(1);
   //servo.unexport();
 }
 
 function close_door(number_door) {
-  let servo_pin = door_info_pin[number_door].servo_pin;
+  let castle_pin = door_info_pin[number_door].castle_pin;
   console.log("Закрыл");
-  let servo = new gpio(servo_pin, "out");
-  servo.writeSync(0);
+  let castle = new gpio(castle_pin, "out");
+  castle.writeSync(0);
   //servo.unexport();
 }
 
-function led_bike_on(number_door) {
-  let led_bike_pin = door_info_pin[number_door].led_bike_pin;
-  console.log(led_bike_pin);
-  let led = new gpio(led_bike_pin, "out");
+function led_bike_free_on(number_door) {
+  let led_bike_free_pin = door_info_pin[number_door].led_bike_free_pin;
+  let led = new gpio(led_bike_free_pin, "out");
   led.writeSync(1);
-  //led.writeSync(led.readSync() ^ 1);
 }
-function led_bike_off(number_door) {
-  let led_bike_pin = door_info_pin[number_door].led_bike_pin;
-  console.log(led_bike_pin);
-  let led = new gpio(led_bike_pin, "out");
+function led_bike_free_off(number_door) {
+  let led_bike_free_pin = door_info_pin[number_door].led_bike_free_pin;
+  let led = new gpio(led_bike_free_pin, "out");
   led.writeSync(0);
-  //led.writeSync(led.readSync() ^ 1);
 }
 
-function led_lighting_door_on(number_door) {
-  let led_pin = door_info_pin[number_door].led_lighting_pin;
-  console.log(led_pin);
-  let led = new gpio(led_pin, "out");
+function led_bike_busy_on(number_door) {
+  let led_bike_busy_pin = door_info_pin[number_door].led_bike_busy_pin;
+  let led = new gpio(led_bike_busy_pin, "out");
   led.writeSync(1);
   //led.writeSync(led.readSync() ^ 1);
 }
-function led_lighting_door_off(number_door) {
-  let led_pin = door_info_pin[number_door].led_lighting_pin;
-  console.log(led_pin);
-  let led = new gpio(led_pin, "out");
+function led_bike_busy_off(number_door) {
+  let led_bike_busy_pin = door_info_pin[number_door].led_bike_busy_pin;
+  let led = new gpio(led_bike_busy_pin, "out");
   led.writeSync(0);
+  //led.writeSync(led.readSync() ^ 1);
 }
 
 // Функции связанные с SQL
