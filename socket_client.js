@@ -64,18 +64,33 @@ function git_info_at_start() {
 }
 
 // Функции управления с IoT элементами
+function start_watch_button(){
+  let button_bike_pin  = door_info_pin[number_door].button_bike_pin;
+  let button = new gpio(button_bike_pin, 'in', 'both');
+
+  let led_bike_pin = door_info_pin[number_door].led_bike_pin;
+  let led = new gpio(led_bike_pin, "out");
+  button.watch((err, value) => {
+    if (err) {
+      throw err;
+    }
+    console.log(value)
+    led.writeSync(value);
+  });
+}
+
 function open_door(number_door) {
   let servo_pin = door_info_pin[number_door].servo_pin;
   console.log("Открыл");
-  let led = new gpio(servo_pin, "out");
-  led.writeSync(1);
+  let servo = new gpio(servo_pin, "out");
+  servo.writeSync(1);
 }
 
 function close_door(number_door) {
   let servo_pin = door_info_pin[number_door].servo_pin;
   console.log("Закрыл");
-  let led = new gpio(servo_pin, "out");
-  led.writeSync(0);
+  let servo = new gpio(servo_pin, "out");
+  servo.writeSync(0);
 }
 
 function led_lighting_door_on(number_door) {
