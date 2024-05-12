@@ -80,13 +80,13 @@ function rents_start(number_door) {
 
   let led = new gpio(led_bike_pin, "out");
   let button = new gpio(button_bike_pin, "in", "both");
-
+  
+  open_door(number_door)
   let timerId = setTimeout(rents_start_timeout, 5000, button ,led, number_door);
   button.watch((err, value) => {
     if (err) {
       throw err;
     }
-    open_door(number_door)
     if (led.readSync() != value) {
       if (value == 1) {
         led.writeSync(value);
