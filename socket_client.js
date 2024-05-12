@@ -54,7 +54,7 @@ function git_info_at_start() {
 function rents_start_timeout(gpio_button_element, number_door) {
   gpio_button_element.unexport();
   led_bike_busy_off(number_door)
-  console.log("Превышено время ожидания велосипеда!")
+  console.log("Превышено время ожидания велосипеда в боксе"+ (number_door+1) + "! ")
 }
 
 //process.on('SIGINT', ); //function to run when user closes using
