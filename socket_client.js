@@ -89,7 +89,7 @@ function rents_start(number_door) {
       if (value == 1) {
         clearTimeout(timerId);
         button.unexport();
-        led_bike_free_off()
+        led_bike_free_off(number_door)
       }
     // }
   });
