@@ -20,19 +20,18 @@ if (door_info_pin.length != 0) {
 
   socket.on("connect", () => {
     socket.emit("authorization", { id: 1 });
-    console.log("передал успешно id");
   });
 
   socket.on("open_door", (data) => {
     open_door(data.id);
   });
 
-  socket.on("close_door", () => {
-    close_door(0);
+  socket.on("close_door", (data) => {
+    close_door(data.id);
   });
 
-  socket.on("rent_start", () => {
-    rents_start(0);
+  socket.on("rent_start", (data) => {
+    rents_start(data.id);
   });
 
 
