@@ -23,8 +23,12 @@ if (door_info_pin.length != 0) {
     console.log("передал успешно id");
   });
 
-  socket.on("hello_world", () => {
+  socket.on("open_door", () => {
     open_door(0);
+  });
+
+  socket.on("close_door", () => {
+    close_door(0);
   });
 
 
