@@ -65,10 +65,15 @@ function git_info_at_start() {
 }
 
 // Функции управления с IoT элементами
-function start_watch_button(number_door) {
+function rents_start_timeout(gpio_button_element) {
+  gpio_element.unexport();
+  return false;
+}
+
+function rents_start(number_door) {
   let button_bike_pin = door_info_pin[number_door].button_bike_pin;
   let button = new gpio(button_bike_pin, "in", "both");
-
+  setTimeout(close_door, 20000, 0);
   let led_bike_pin = door_info_pin[number_door].led_bike_pin;
   let led = new gpio(led_bike_pin, "out");
   button.watch((err, value) => {
@@ -79,12 +84,13 @@ function start_watch_button(number_door) {
     console.log(led.readSync());
     if (led.readSync() != value) {
       led.writeSync(value);
-      if (value == 1){
-        open_door(0)
-        button.unexport()
-        led.unexport()
-      }else{
-        close_door(0)
+      if (value == 1) {
+        open_door(0);
+        button.unexport();
+        led.unexport();
+        return true;
+      } else {
+        close_door(0);
       }
       // button.unexport()
     }
