@@ -77,7 +77,7 @@ function rents_start(number_door) {
 
   let button = new gpio(button_bike_pin, "in", "both");
   
-  let timerId = setTimeout(rents_start_timeout, 5000, button, number_door);
+  let timerId = setTimeout(rents_start_timeout, 10000, button, number_door);
   led_bike_free_on(number_door)
   led_bike_busy_on(number_door)
   button.watch((err, value) => {
