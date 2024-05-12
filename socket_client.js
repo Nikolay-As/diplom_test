@@ -68,6 +68,7 @@ function git_info_at_start() {
 function rents_start_timeout(gpio_button_element, gpio_led_element) {
   gpio_button_element.unexport();
   gpio_led_element.unexport();
+  console.log("вы не успели арендовать!")
 }
 
 //process.on('SIGINT', ); //function to run when user closes using
