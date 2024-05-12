@@ -86,7 +86,6 @@ function open_door(number_door) {
   console.log("Открыл");
   let castle = new gpio(castle_pin, "out");
   castle.writeSync(1);
-  //servo.unexport();
 }
 
 function close_door(number_door) {
@@ -94,7 +93,6 @@ function close_door(number_door) {
   console.log("Закрыл");
   let castle = new gpio(castle_pin, "out");
   castle.writeSync(0);
-  //servo.unexport();
 }
 
 function led_bike_free_on(number_door) {
@@ -118,7 +116,6 @@ function led_bike_busy_off(number_door) {
   let led_bike_busy_pin = door_info_pin[number_door].led_bike_busy_pin;
   let led = new gpio(led_bike_busy_pin, "out");
   led.writeSync(0);
-  //led.writeSync(led.readSync() ^ 1);
 }
 
 // Функции связанные с SQL
@@ -131,38 +128,4 @@ function runQueries(queries_text, parametr = null) {
     console.log("Getting error " + err);
     return result;
   }
-  //var rows = db.prepare(queries_text).all();
-  // let db =  new sqlite3.Database(
-  //   dbFilePath,
-  //   sqlite3.OPEN_READWRITE,
-  //   (err) => {
-  //     if (err) {
-  //       console.log("Getting error " + err);
-  //       return result;
-  //     } else {
-  //       if (parametr) {
-  //         db.all(queries_text, parametr, (err, rows) => {
-  //           if (err) {
-  //             console.log("Getting error " + err);
-  //             return result;
-  //           } else {
-  //             console.log("nen1");
-  //             result = rows;
-  //             return result;
-  //           }
-  //         });
-  //       } else {
-  //         db.all(queries_text, (err, rows) => {
-  //           if (err) {
-  //             console.log("Getting error " + err);
-  //             return result;
-  //           } else {
-  //             result = rows;
-  //             return result;
-  //           }
-  //         });
-  //       }
-  //     }
-  //   }
-  // );
 }
