@@ -78,6 +78,7 @@ function start_watch_button(number_door){
     console.log(value)
     if(led.readSync != value ){
       led.writeSync(value);
+      button.unexport()
     }
   });
 }
