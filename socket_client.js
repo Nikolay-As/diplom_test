@@ -54,7 +54,7 @@ function git_info_at_start() {
 function rents_start_timeout(gpio_button_element, number_door) {
   gpio_button_element.unexport();
   led_bike_busy_off(number_door)
-  console.log("Превышено время ожидания велосипеда в боксе"+ (number_door+1) + "! ")
+  console.log("Превышено время ожидания велосипеда в боксе №"+ (number_door+1) + "! ")
 }
 
 //process.on('SIGINT', ); //function to run when user closes using
@@ -76,7 +76,7 @@ function rents_start(number_door) {
         clearTimeout(timerId);
         button.unexport();
         led_bike_free_off(number_door)
-        console.log("Велосипед успешно припаркован в бокс номер " + (number_door+1) + "! ")
+        console.log("Велосипед успешно припаркован в бокс №" + (number_door+1) + "! ")
       }
   });
 }
