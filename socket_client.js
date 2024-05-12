@@ -30,7 +30,7 @@ let door_info_pin = new Array(); // тут хранится информация
 door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Приложение  готово к работе!");
-  led_bike_on(number_door)
+  led_bike_on(0)
   setTimeout(led_bike_off, 4000, 0);
   //start_watch_button(0)
   // open_door(0);
