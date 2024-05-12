@@ -66,14 +66,14 @@ function git_info_at_start() {
 // Функции управления с IoT элементами
 function open_door(number_door) {
   let servo_pin = door_info_pin[number_door].servo_pin;
-  console.log(servo_pin);
+  console.log("Открыл");
   let led = new gpio(servo_pin, "out");
   led.writeSync(1);
 }
 
 function close_door(number_door) {
   let servo_pin = door_info_pin[number_door].servo_pin;
-  console.log(servo_pin);
+  console.log("Закрыл");
   let led = new gpio(servo_pin, "out");
   led.writeSync(0);
 }
