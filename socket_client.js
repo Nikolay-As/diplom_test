@@ -1,4 +1,5 @@
 const io = require("socket.io-client");
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 // Если локалхост то не используем url_socket_server
 // иначе const socket = io(url_socket_server);
