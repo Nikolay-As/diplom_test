@@ -54,6 +54,7 @@ function git_info_at_start() {
         led_bike_busy_pin: row.led_bike_busy_pin,
         button_bike_pin: row.button_bike_pin,
         led_bike_free_pin: row.led_bike_free_pin,
+        gerkon_pin: row.gerkon_pin
       };
       door_info_pin.push(structure);
     }
