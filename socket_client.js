@@ -1,5 +1,5 @@
 const io = require("socket.io-client");
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 let alarm = false;
 
 // Если локалхост то не используем url_socket_server
@@ -31,6 +31,10 @@ if (door_info_pin.length != 0) {
 
   socket.on("close_door", (data) => {
     close_door_with_gerkon(data.id);
+  });
+
+  socket.on("reset", (data) => {
+    reset(data.id);
   });
 
   socket.on("rent_start", (data) => {
@@ -132,6 +136,11 @@ function open_door_with_gerkon(number_door) {
   });
 }
 
+function reset(number_door) {
+  led_bike_free_off(number_door);
+  led_bike_busy_off(number_door);
+}
+
 function open_door(number_door) {
   let castle_pin = door_info_pin[number_door].castle_pin;
   console.log("Открыл замок в боксе " + (number_door + 1) + "! ");
@@ -172,23 +181,22 @@ function close_door_timeout(gpio_gerkon_element, number_door) {
   });
 }
 
-async function alarm_system(number_door){
-   if (!alarm){
-    led_bike_alarm(number_door)
+async function alarm_system(number_door) {
+  if (!alarm) {
+    led_bike_alarm(number_door);
     setTimeout(alarm_system, 500, number_door);
-   }
+  }
 }
 
 function led_bike_alarm(number_door) {
   let led_bike_free_pin = door_info_pin[number_door].led_bike_free_pin;
   let led_free = new gpio(led_bike_free_pin, "out");
-  led_free.writeSync(led_free.readSync()^1);
-  
+  led_free.writeSync(led_free.readSync() ^ 1);
+
   let led_bike_busy_pin = door_info_pin[number_door].led_bike_busy_pin;
   let led = new gpio(led_bike_busy_pin, "out");
-  led.writeSync(led.readSync()^1);
+  led.writeSync(led.readSync() ^ 1);
 }
-
 
 function close_door_with_gerkon(number_door) {
   console.log("Закройте дверь в боксе " + (number_door + 1) + "! ");
