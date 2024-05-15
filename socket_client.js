@@ -129,6 +129,7 @@ function open_door_with_gerkon(number_door) {
       console.log(
         "Дверь успешно открыта №" + (number_door + 1) + "! "
       );
+      close_door(number_door);
     }
   });
 }
@@ -138,6 +139,7 @@ function open_door(number_door) {
   console.log("Открыл замок в боксе "+ (number_door + 1) + "! ");
   let castle = new gpio(castle_pin, "out");
   castle.writeSync(1);
+  
 }
 
 function close_door(number_door) {
