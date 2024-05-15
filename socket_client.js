@@ -162,7 +162,7 @@ function close_door_timeout(gpio_gerkon_element, number_door) {
     if (err) {
       throw err;
     }
-    if (value == 1) {
+    if (value == 0) {
       gerkon.unexport();
       alarm = true;
       led_bike_busy_on(number_door);
