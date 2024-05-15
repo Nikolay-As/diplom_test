@@ -16,6 +16,7 @@ if (door_info_pin.length != 0) {
   console.log("Велобокс №1 готов к работе!");
  led_bike_free_on(0);
  led_bike_busy_off(0);
+ open_door_with_gerkon(0)
 
   var socket = io(url_socket_server, { reconnect: true });
 
@@ -97,9 +98,43 @@ function rents_start(number_door) {
   });
 }
 
+function open_door_timeout(gpio_gerkon_element, number_door) {
+  gpio_gerkon_element.unexport();
+  close_door(number_door);
+  led_bike_free_on(number_door);
+  console.log(
+    "Превышено время ожидания открытия двери в боксе №" + (number_door + 1) + "! "
+  );
+}
+
+function open_door_with_gerkon(number_door) {
+  console.log("Откройте дверь в боксе "+ (number_door + 1) + "! ");
+  let gerkon_pin = door_info_pin[number_door].gerkon_pin;
+
+  let gerkon = new gpio(gerkon_pin, "in", "both");
+
+  let timerId = setTimeout(open_door_timeout, 10000, gerkon, number_door);
+  led_bike_free_off(number_door);
+  led_bike_busy_off(number_door);
+  gerkon.watch((err, value) => {
+    if (err) {
+      throw err;
+    }
+    console.log(value)
+    // if (value == 1) {
+    //   clearTimeout(timerId);
+    //   gerkon.unexport();
+    //   led_bike_free_off(number_door);
+    //   console.log(
+    //     "Дверь успешно открыта №" + (number_door + 1) + "! "
+    //   );
+    // }
+  });
+}
+
 function open_door(number_door) {
   let castle_pin = door_info_pin[number_door].castle_pin;
-  console.log("Открыл");
+  console.log("Открыл замок в боксе "+ (number_door + 1) + "! ");
   let castle = new gpio(castle_pin, "out");
   castle.writeSync(1);
 }
