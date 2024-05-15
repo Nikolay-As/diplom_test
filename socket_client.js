@@ -1,4 +1,4 @@
- const io = require("socket.io-client");
+const io = require("socket.io-client");
 
 // Если локалхост то не используем url_socket_server
 // иначе const socket = io(url_socket_server);
@@ -14,11 +14,10 @@ let door_info_pin = new Array(); // тут хранится информация
 door_info_pin = git_info_at_start();
 if (door_info_pin.length != 0) {
   console.log("Велобокс №1 готов к работе!");
- led_bike_free_on(0);
- led_bike_busy_off(0);
+  led_bike_free_on(0);
+  led_bike_busy_off(0);
 
   var socket = io(url_socket_server, { reconnect: true });
-
 
   socket.on("connect", () => {
     socket.emit("authorization", { id: 1 });
@@ -35,8 +34,6 @@ if (door_info_pin.length != 0) {
   socket.on("rent_start", (data) => {
     rents_start(data.id);
   });
-
-
 } else {
   console.log("Приложение не готов к работе, проверьте БД");
 }
@@ -54,7 +51,7 @@ function git_info_at_start() {
         led_bike_busy_pin: row.led_bike_busy_pin,
         button_bike_pin: row.button_bike_pin,
         led_bike_free_pin: row.led_bike_free_pin,
-        gerkon_pin: row.gerkon_pin
+        gerkon_pin: row.gerkon_pin,
       };
       door_info_pin.push(structure);
     }
@@ -102,12 +99,14 @@ function open_door_timeout(gpio_gerkon_element, number_door) {
   close_door(number_door);
   led_bike_free_on(number_door);
   console.log(
-    "Превышено время ожидания открытия двери в боксе №" + (number_door + 1) + "! "
+    "Превышено время ожидания открытия двери в боксе №" +
+      (number_door + 1) +
+      "! "
   );
 }
 
 function open_door_with_gerkon(number_door) {
-  console.log("Откройте дверь в боксе "+ (number_door + 1) + "! ");
+  console.log("Откройте дверь в боксе " + (number_door + 1) + "! ");
   let gerkon_pin = door_info_pin[number_door].gerkon_pin;
 
   let gerkon = new gpio(gerkon_pin, "in", "both");
@@ -115,19 +114,17 @@ function open_door_with_gerkon(number_door) {
   let timerId = setTimeout(open_door_timeout, 10000, gerkon, number_door);
   led_bike_free_off(number_door);
   led_bike_busy_off(number_door);
-  open_door(0)
+  open_door(0);
   gerkon.watch((err, value) => {
     if (err) {
       throw err;
     }
-    console.log(value)
+    console.log(value);
     if (value == 1) {
       clearTimeout(timerId);
       gerkon.unexport();
       //led_bike_free_off(number_door);
-      console.log(
-        "Дверь успешно открыта №" + (number_door + 1) + "! "
-      );
+      console.log("Дверь успешно открыта №" + (number_door + 1) + "! ");
       setTimeout(close_door, 2000, number_door);
     }
   });
@@ -135,10 +132,9 @@ function open_door_with_gerkon(number_door) {
 
 function open_door(number_door) {
   let castle_pin = door_info_pin[number_door].castle_pin;
-  console.log("Открыл замок в боксе "+ (number_door + 1) + "! ");
+  console.log("Открыл замок в боксе " + (number_door + 1) + "! ");
   let castle = new gpio(castle_pin, "out");
   castle.writeSync(1);
-  
 }
 
 function close_door(number_door) {
@@ -146,6 +142,59 @@ function close_door(number_door) {
   console.log("Закрыл");
   let castle = new gpio(castle_pin, "out");
   castle.writeSync(0);
+}
+
+function close_door_timeout(gpio_gerkon_element, number_door) {
+  gpio_gerkon_element.unexport();
+  console.log(
+    "Превышено время ожидания закрытия двери в боксе №" +
+      (number_door + 1) +
+      "! "
+  );
+  console.log("Сработала сигнализация в боксе №" + (number_door + 1) + "! ");
+  let gerkon_pin = door_info_pin[number_door].gerkon_pin;
+  let gerkon = new gpio(gerkon_pin, "in", "both");
+  gerkon.watch((err, value) => {
+    if (err) {
+      throw err;
+    }
+    led_bike_free_off(number_door);
+    led_bike_busy_on(number_door);
+    delay(100)
+    led_bike_free_on(number_door);
+    led_bike_busy_off(number_door);
+    delay(100)
+    if (value == 1) {
+      gerkon.unexport();
+      led_bike_busy_on(number_door);
+      led_bike_free_off(number_door);
+      console.log("Дверь успешно закрыта №" + (number_door + 1) + "! ");
+    }
+  });
+}
+
+function close_door_with_gerkon(number_door) {
+  console.log("Закройте дверь в боксе " + (number_door + 1) + "! ");
+  let gerkon_pin = door_info_pin[number_door].gerkon_pin;
+
+  let gerkon = new gpio(gerkon_pin, "in", "both");
+
+  let timerId = setTimeout(open_door_timeout, 10000, gerkon, number_door);
+  led_bike_free_off(number_door);
+  led_bike_busy_off(number_door);
+  //open_door(0)
+  gerkon.watch((err, value) => {
+    if (err) {
+      throw err;
+    }
+    console.log(value);
+    if (value == 1) {
+      clearTimeout(timerId);
+      gerkon.unexport();
+      led_bike_busy_on(number_door);
+      console.log("Дверь успешно закрыта №" + (number_door + 1) + "! ");
+    }
+  });
 }
 
 function led_bike_free_on(number_door) {
