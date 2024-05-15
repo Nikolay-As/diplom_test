@@ -116,19 +116,20 @@ function open_door_with_gerkon(number_door) {
   let timerId = setTimeout(open_door_timeout, 10000, gerkon, number_door);
   led_bike_free_off(number_door);
   led_bike_busy_off(number_door);
+  open_door(0)
   gerkon.watch((err, value) => {
     if (err) {
       throw err;
     }
     console.log(value)
-    // if (value == 1) {
-    //   clearTimeout(timerId);
-    //   gerkon.unexport();
-    //   led_bike_free_off(number_door);
-    //   console.log(
-    //     "Дверь успешно открыта №" + (number_door + 1) + "! "
-    //   );
-    // }
+    if (value == 1) {
+      clearTimeout(timerId);
+      gerkon.unexport();
+      //led_bike_free_off(number_door);
+      console.log(
+        "Дверь успешно открыта №" + (number_door + 1) + "! "
+      );
+    }
   });
 }
 
