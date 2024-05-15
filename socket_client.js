@@ -173,7 +173,6 @@ function close_door_timeout(gpio_gerkon_element, number_door) {
 }
 
 async function alarm_system(number_door){
-  console.log("Внимание!!!")
    if (!alarm){
     led_bike_alarm(number_door)
     setTimeout(alarm_system, 500, number_door);
@@ -206,7 +205,7 @@ function close_door_with_gerkon(number_door) {
       throw err;
     }
     console.log(value);
-    if (value == 1) {
+    if (value == 0) {
       clearTimeout(timerId);
       gerkon.unexport();
       led_bike_busy_on(number_door);
