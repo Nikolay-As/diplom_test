@@ -16,7 +16,6 @@ if (door_info_pin.length != 0) {
   console.log("Велобокс №1 готов к работе!");
  led_bike_free_on(0);
  led_bike_busy_off(0);
- open_door_with_gerkon(0)
 
   var socket = io(url_socket_server, { reconnect: true });
 
@@ -26,7 +25,7 @@ if (door_info_pin.length != 0) {
   });
 
   socket.on("open_door", (data) => {
-    open_door(data.id);
+    open_door_with_gerkon(data.id);
   });
 
   socket.on("close_door", (data) => {
