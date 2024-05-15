@@ -1,5 +1,6 @@
 const io = require("socket.io-client");
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+let alarm = false;
 
 // Если локалхост то не используем url_socket_server
 // иначе const socket = io(url_socket_server);
@@ -155,24 +156,40 @@ function close_door_timeout(gpio_gerkon_element, number_door) {
   console.log("Сработала сигнализация в боксе №" + (number_door + 1) + "! ");
   let gerkon_pin = door_info_pin[number_door].gerkon_pin;
   let gerkon = new gpio(gerkon_pin, "in", "both");
+
+  alarm_system(0);
   gerkon.watch((err, value) => {
     if (err) {
       throw err;
     }
-    led_bike_free_off(number_door);
-    led_bike_busy_on(number_door);
-    delay(100)
-    led_bike_free_on(number_door);
-    led_bike_busy_off(number_door);
-    delay(100)
     if (value == 1) {
       gerkon.unexport();
+      alarm = true;
       led_bike_busy_on(number_door);
       led_bike_free_off(number_door);
       console.log("Дверь успешно закрыта №" + (number_door + 1) + "! ");
     }
   });
 }
+
+async function alarm_system(number_door){
+   if (!alarm){
+    led_bike_alarm(number_door)
+    setTimeout(alarm_system, 200, number_door);
+   }
+}
+
+function led_bike_alarm(number_door) {
+  let led_bike_busy_pin = door_info_pin[number_door].led_bike_free_pin;
+  let led = new gpio(led_bike_busy_pin, "out");
+  led.writeSync();
+  led.writeSync(led.readSync()^1);
+
+  let led_bike_free_pin = door_info_pin[number_door].led_bike_free_pin;
+  let led_free = new gpio(led_bike_free_pin, "out");
+  led_free.writeSync(led_free.readSync()^1);
+}
+
 
 function close_door_with_gerkon(number_door) {
   console.log("Закройте дверь в боксе " + (number_door + 1) + "! ");
