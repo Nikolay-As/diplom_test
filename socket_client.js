@@ -129,7 +129,7 @@ function open_door_with_gerkon(number_door) {
       console.log(
         "Дверь успешно открыта №" + (number_door + 1) + "! "
       );
-      close_door(number_door);
+      setTimeout(close_door, 2000, number_door);
     }
   });
 }
