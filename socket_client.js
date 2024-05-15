@@ -173,21 +173,21 @@ function close_door_timeout(gpio_gerkon_element, number_door) {
 }
 
 async function alarm_system(number_door){
-  console.log("тут")
+  console.log("Внимание!!!")
    if (!alarm){
     led_bike_alarm(number_door)
-    setTimeout(alarm_system, 400, number_door);
+    setTimeout(alarm_system, 500, number_door);
    }
 }
 
 function led_bike_alarm(number_door) {
-  let led_bike_busy_pin = door_info_pin[number_door].led_bike_busy_pin;
-  let led = new gpio(led_bike_busy_pin, "out");
-  led.writeSync(led.readSync()^1);
-
   let led_bike_free_pin = door_info_pin[number_door].led_bike_free_pin;
   let led_free = new gpio(led_bike_free_pin, "out");
   led_free.writeSync(led_free.readSync()^1);
+  
+  let led_bike_busy_pin = door_info_pin[number_door].led_bike_busy_pin;
+  let led = new gpio(led_bike_busy_pin, "out");
+  led.writeSync(led.readSync()^1);
 }
 
 
