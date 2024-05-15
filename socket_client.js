@@ -176,7 +176,7 @@ async function alarm_system(number_door){
   console.log("тут")
    if (!alarm){
     led_bike_alarm(number_door)
-    setTimeout(alarm_system, 200, number_door);
+    setTimeout(alarm_system, 400, number_door);
    }
 }
 
