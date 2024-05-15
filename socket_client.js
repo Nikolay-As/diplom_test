@@ -197,7 +197,7 @@ function close_door_with_gerkon(number_door) {
 
   let gerkon = new gpio(gerkon_pin, "in", "both");
 
-  let timerId = setTimeout(close_door_timeout, 10000, gerkon, number_door);
+  let timerId = setTimeout(close_door_timeout, 5000, gerkon, number_door);
   led_bike_free_off(number_door);
   led_bike_busy_off(number_door);
   //open_door(0)
