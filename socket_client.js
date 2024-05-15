@@ -28,7 +28,7 @@ if (door_info_pin.length != 0) {
   });
 
   socket.on("close_door", (data) => {
-    close_door(data.id);
+    close_door_with_gerkon(data.id);
   });
 
   socket.on("rent_start", (data) => {
@@ -179,7 +179,7 @@ function close_door_with_gerkon(number_door) {
 
   let gerkon = new gpio(gerkon_pin, "in", "both");
 
-  let timerId = setTimeout(open_door_timeout, 10000, gerkon, number_door);
+  let timerId = setTimeout(close_door_timeout, 10000, gerkon, number_door);
   led_bike_free_off(number_door);
   led_bike_busy_off(number_door);
   //open_door(0)
