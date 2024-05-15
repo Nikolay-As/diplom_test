@@ -181,9 +181,8 @@ async function alarm_system(number_door){
 }
 
 function led_bike_alarm(number_door) {
-  let led_bike_busy_pin = door_info_pin[number_door].led_bike_free_pin;
+  let led_bike_busy_pin = door_info_pin[number_door].led_bike_busy_pin;
   let led = new gpio(led_bike_busy_pin, "out");
-  led.writeSync();
   led.writeSync(led.readSync()^1);
 
   let led_bike_free_pin = door_info_pin[number_door].led_bike_free_pin;
